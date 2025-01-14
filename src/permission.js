@@ -19,6 +19,7 @@ router.beforeEach((to, from, next) => {
           let username=res.data.username;
           store.dispatch('GenerateRoutes', { menus,username }).then(() => { // 生成可访问的路由表
             router.addRoutes(store.getters.addRouters); // 动态添加可访问路由表
+
             next({ ...to, replace: true })
           })
         }).catch((err) => {
@@ -44,3 +45,4 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   NProgress.done() // 结束Progress
 })
+

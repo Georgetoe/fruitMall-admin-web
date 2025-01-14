@@ -39,6 +39,7 @@ export const constantRouterMap = [
     },
     ]
   }
+
 ]
 
 export const asyncRouterMap = [
@@ -60,6 +61,7 @@ export const asyncRouterMap = [
         component: () => import('@/views/pms/product/add'),
         meta: {title: '添加商品', icon: 'product-add'}
       },
+
       {
         path: 'updateProduct',
         name: 'updateProduct',
@@ -72,6 +74,11 @@ export const asyncRouterMap = [
         name: 'productCate',
         component: () => import('@/views/pms/productCate/index'),
         meta: {title: '商品分类', icon: 'product-cate'}
+      },
+      {
+        path: '../views/shop/index',
+        name: 'test',
+        meta: {title: '测试', icon: 'product-cate'}
       },
       {
         path: 'addProductCate',
@@ -118,20 +125,20 @@ export const asyncRouterMap = [
         path: 'brand',
         name: 'brand',
         component: () => import('@/views/pms/brand/index'),
-        meta: {title: '品牌管理', icon: 'product-brand'}
+        meta: {title: '店铺管理', icon: 'product-brand'}
       },
       {
         path: 'addBrand',
         name: 'addBrand',
         component: () => import('@/views/pms/brand/add'),
-        meta: {title: '添加品牌'},
+        meta: {title: '添加店铺'},
         hidden: true
       },
       {
         path: 'updateBrand',
         name: 'updateBrand',
         component: () => import('@/views/pms/brand/update'),
-        meta: {title: '编辑品牌'},
+        meta: {title: '编辑店铺'},
         hidden: true
       }
     ]
@@ -156,6 +163,7 @@ export const asyncRouterMap = [
         meta: {title: '订单详情'},
         hidden:true
       },
+
       {
         path: 'deliverOrderList',
         name: 'deliverOrderList',
@@ -330,6 +338,7 @@ export const asyncRouterMap = [
         meta: {title: '分配资源'},
         hidden: true
       },
+
       {
         path: 'menu',
         name: 'menu',
@@ -365,6 +374,122 @@ export const asyncRouterMap = [
       }
     ]
   },
+  {
+    path:'/shop',
+    component: Layout,
+    redirect: '/shop/product',
+    name: 'shop',
+    meta: {title: '商家店铺', icon: 'shop'},
+    children: [
+      {
+        path: 'home',
+        name: 'businessSituation',
+        component: () => import('@/views/shop/index'),
+        meta: {title: '经营状况', icon: 'dashboard'}
+      },
+
+      {
+      path: 'product',
+      name: 'product',
+      component: () => import('@/views/shop/product/index'),
+      meta: {title: '商品列表', icon: 'product-list'}
+      },
+      {
+        path: 'addProduct',
+        name: 'addProduct',
+        component: () => import('@/views/shop/product/add'),
+        meta: {title: '添加商品', icon: 'product-add'}
+      },
+
+      {
+        path: 'updateProduct',
+        name: 'updateProduct',
+        component: () => import('@/views/shop/product/update'),
+        meta: {title: '修改商品', icon: 'product-add'},
+        hidden: true
+      },
+      {
+        path: 'productAttrList',
+        name: 'productAttrList',
+        component: () => import('@/views/shop/productAttr/productAttrList'),
+        meta: {title: '商品属性列表'},
+        hidden: true
+      },
+      {
+        path: 'addProductAttr',
+        name: 'addProductAttr',
+        component: () => import('@/views/shop/productAttr/addProductAttr'),
+        meta: {title: '添加商品属性'},
+        hidden: true
+      },
+      {
+        path: 'updateProductAttr',
+        name: 'updateProductAttr',
+        component: () => import('@/views/shop/productAttr/updateProductAttr'),
+        meta: {title: '修改商品属性'},
+        hidden: true
+      },
+      {
+        path: '/shop/shopOrder',
+        component: Layout,
+        redirect: '/shopOrder/order',
+        name: 'shopOrder',
+        meta: {title: '订单', icon: 'order'},
+        children: [
+          {
+            path: 'order',
+            name: 'order',
+            component: () => import('@/views/shop/shopOrder/order/index'),
+            meta: {title: '订单列表', icon: 'product-list'}
+          },
+          {
+            path: 'orderDetail',
+            name: 'orderDetail',
+            component: () => import('@/views/shop/shopOrder/order/orderDetail'),
+            meta: {title: '订单详情'},
+            hidden:true
+          },
+
+          {
+            path: 'deliverOrderList',
+            name: 'deliverOrderList',
+            component: () => import('@/views/shop/shopOrder/order/deliverOrderList'),
+            meta: {title: '发货列表'},
+            hidden:true
+          },
+          {
+            path: 'orderSetting',
+            name: 'orderSetting',
+            component: () => import('@/views/shop/shopOrder/order/setting'),
+            meta: {title: '订单设置', icon: 'order-setting'}
+          },
+          {
+            path: 'returnApply',
+            name: 'shopReturnApply',
+            component: () => import('@/views/shop/shopOrder/apply/index'),
+            meta: {title: '退货申请', icon: 'order-return'}
+          },
+          {
+            path: 'returnReason',
+            name: 'shopReturnReason',
+            component: () => import('@/views/shop/shopOrder/apply/reason'),
+            meta: {title: '退货原因', icon: 'order-return-reason'}
+          },
+          {
+            path: 'returnApplyDetail',
+            name: 'shopReturnApplyDetail',
+            component: () => import('@/views/shop/shopOrder/apply/applyDetail'),
+            meta: {title: '退货原因详情'},
+            hidden:true
+          }
+        ]
+      },
+
+
+
+    ]
+  },
+
   {path: '*', redirect: '/404', hidden: true}
 ]
 

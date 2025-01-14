@@ -1,19 +1,19 @@
 <template> 
   <el-card class="form-container" shadow="never">
     <el-form :model="brand" :rules="rules" ref="brandFrom" label-width="150px">
-      <el-form-item label="品牌名称：" prop="name">
+      <el-form-item label="店铺名称：" prop="name">
         <el-input v-model="brand.name"></el-input>
       </el-form-item>
-      <el-form-item label="品牌首字母：">
+      <el-form-item label="店铺首字母：">
         <el-input v-model="brand.firstLetter"></el-input>
       </el-form-item>
-      <el-form-item label="品牌LOGO：" prop="logo">
+      <el-form-item label="店铺LOGO：" prop="logo">
         <single-upload v-model="brand.logo"></single-upload>
       </el-form-item>
-      <el-form-item label="品牌专区大图：">
+      <el-form-item label="店铺专区大图：">
         <single-upload v-model="brand.bigPic"></single-upload>
       </el-form-item>
-      <el-form-item label="品牌故事：">
+      <el-form-item label="店铺故事：">
         <el-input
           placeholder="请输入内容"
           type="textarea"
@@ -29,7 +29,7 @@
           <el-radio :label="0">否</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="品牌制造商：">
+      <el-form-item label="店铺制造商：">
         <el-radio-group v-model="brand.factoryStatus">
           <el-radio :label="1">是</el-radio>
           <el-radio :label="0">否</el-radio>
@@ -69,11 +69,11 @@
         brand:Object.assign({}, defaultBrand),
         rules: {
           name: [
-            {required: true, message: '请输入品牌名称', trigger: 'blur'},
+            {required: true, message: '请输入店铺名称', trigger: 'blur'},
             {min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur'}
           ],
           logo: [
-            {required: true, message: '请输入品牌logo', trigger: 'blur'}
+            {required: true, message: '请输入店铺logo', trigger: 'blur'}
           ],
           sort: [
             {type: 'number', message: '排序必须为数字'}
