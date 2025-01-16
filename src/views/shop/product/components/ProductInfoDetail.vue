@@ -64,7 +64,8 @@
 
 <script>
   import {fetchListWithChildren} from '@/api/productCate'
-  import {fetchList as fetchBrandList} from '@/api/brand'
+  import {fetchList as fetchBrandList,getBrand, fetchBrand} from '@/api/brand'
+  import {getInfo} from '@/api/admin';
   import {getProduct} from '@/api/product';
 
   export default {
@@ -77,6 +78,8 @@
       }
     },
     data() {
+      let adminId=0;
+      let listQuery=null;
       return {
         hasEditCreated:false,
         //选中商品分类的值
@@ -97,8 +100,8 @@
       };
     },
     created() {
+      this.getAdminInfo();
       this.getProductCateList();
-      this.getBrandList();
     },
     computed:{
       //商品的编号
@@ -151,6 +154,32 @@
         fetchBrandList({pageNum: 1, pageSize: 100}).then(response => {
           this.brandOptions = [];
           let brandList = response.data.list;
+          for (let i = 0; i < brandList.length; i++) {
+            this.brandOptions.push({label: brandList[i].name, value: brandList[i].id});
+          }
+        });
+      },
+      //获取当前用户信息
+      getAdminInfo()
+      {
+        getInfo().then(response=>{
+          this.adminId=response.data["id"];
+          this.getShopBrand();
+        });
+
+      },
+      //获取店铺品牌
+      getShopBrand() {
+        let adminId=this.adminId;
+        let listQuery=this.listQuery;
+        const parms={
+          listQuery,
+          adminId,
+        }
+        fetchBrand(parms).then(response => {
+          this.brandOptions = [];
+          let brandList = response.data.list;
+          console.log(response.data);
           for (let i = 0; i < brandList.length; i++) {
             this.brandOptions.push({label: brandList[i].name, value: brandList[i].id});
           }

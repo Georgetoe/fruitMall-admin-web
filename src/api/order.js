@@ -7,6 +7,16 @@ export function fetchList(params) {
   })
 }
 
+export function fetchShopList(params) {
+  return request({
+    url:'/shoporder/list',
+    method:'get',
+    params:params
+  })
+}
+
+
+
 export function closeOrder(params) {
   return request({
     url:'/order/update/close',
@@ -37,6 +47,7 @@ export function getOrderDetail(id) {
     method:'get'
   });
 }
+
 
 export function updateReceiverInfo(data) {
   return request({

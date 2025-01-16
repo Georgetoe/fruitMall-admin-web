@@ -7,6 +7,14 @@ export function fetchList(params) {
   })
 }
 
+export function fetchShopList(params) {
+  return request({
+    url:'shop/product/list',
+    method:'get',
+    params:params
+  })
+}
+
 export function fetchSimpleList(params) {
   return request({
     url:'/product/simpleList',

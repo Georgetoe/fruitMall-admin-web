@@ -274,6 +274,7 @@
 <script>
   import {
     fetchList,
+    fetchShopList,
     updateDeleteStatus,
     updateNewStatus,
     updateRecommendStatus,
@@ -283,6 +284,7 @@
   import {fetchList as fetchProductAttrList} from '@/api/productAttr'
   import {fetchList as fetchBrandList} from '@/api/brand'
   import {fetchListWithChildren} from '@/api/productCate'
+  import {getInfo} from "../../../api/admin";
 
   const defaultListQuery = {
     keyword: null,
@@ -296,6 +298,7 @@
   };
   export default {
     name: "productList",
+
     data() {
       return {
         editSkuInfo:{
@@ -367,9 +370,10 @@
       }
     },
     created() {
-      this.getList();
+      this. getAdminInfo();
       this.getBrandList();
       this.getProductCateList();
+
     },
     watch: {
       selectProductCateValue: function (newValue) {
@@ -401,11 +405,26 @@
       },
       getList() {
         this.listLoading = true;
-        fetchList(this.listQuery).then(response => {
+        let adminId=this.adminId;
+        let listQuery=this.listQuery;
+        const parms={
+          listQuery,
+          adminId,
+        }
+          fetchShopList(parms).then(response => {
           this.listLoading = false;
           this.list = response.data.list;
           this.total = response.data.total;
         });
+      },
+      getAdminInfo()
+      {
+        getInfo().then(response=>{
+          this.adminId=response.data["id"];
+          console.log(response.data);
+          this.getList();
+        });
+
       },
       getBrandList() {
         fetchBrandList({pageNum: 1, pageSize: 100}).then(response => {
@@ -480,7 +499,7 @@
         this.getList();
       },
       handleAddProduct() {
-        this.$router.push({path:'/pms/addProduct'});
+        this.$router.push({path:'addProduct'});
       },
       handleBatchOperate() {
         if(this.operateType==null){
@@ -581,7 +600,7 @@
         });
       },
       handleUpdateProduct(index,row){
-        this.$router.push({path:'/pms/updateProduct',query:{id:row.id}});
+        this.$router.push({path:'updateProduct',query:{id:row.id}});
       },
       handleShowProduct(index,row){
         console.log("handleShowProduct",row);

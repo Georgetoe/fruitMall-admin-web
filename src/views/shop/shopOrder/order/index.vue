@@ -181,7 +181,9 @@
 <script>
   import {fetchList,closeOrder,deleteOrder} from '@/api/order'
   import {formatDate} from '@/utils/date';
-  import LogisticsDialog from '@/views/oms/order/components/logisticsDialog';
+  import LogisticsDialog from '@/views/shop/shopOrder/order/components/logisticsDialog';
+  import {getInfo} from '@/api/admin';
+  import {fetchShopList} from "../../../../api/order";
   const defaultListQuery = {
     pageNum: 1,
     pageSize: 10,
@@ -196,8 +198,10 @@
     name: "orderList",
     components:{LogisticsDialog},
     data() {
+
       return {
         listQuery: Object.assign({}, defaultListQuery),
+        adminId:0,
         listLoading: true,
         list: null,
         total: null,
@@ -268,7 +272,8 @@
       }
     },
     created() {
-      this.getList();
+      this.getAdminInfo()
+     // this.getList();
     },
     filters: {
       formatCreateTime(time) {
@@ -319,7 +324,8 @@
         this.multipleSelection = val;
       },
       handleViewOrder(index, row){
-        this.$router.push({path:'/oms/orderDetail',query:{id:row.id}})
+
+        this.$router.push({path:'orderDetail',query:{id:row.id}})
       },
       handleCloseOrder(index, row){
         this.closeOrder.dialogVisible=true;
@@ -327,7 +333,8 @@
       },
       handleDeliveryOrder(index, row){
         let listItem = this.covertOrder(row);
-        this.$router.push({path:'/oms/deliverOrderList',query:{list:[listItem]}})
+
+        this.$router.push({path:'deliverOrderList',query:{list:[listItem]}})
       },
       handleViewLogistics(index, row){
         this.logisticsDialogVisible=true;
@@ -362,7 +369,7 @@
             });
             return;
           }
-          this.$router.push({path:'/oms/deliverOrderList',query:{list:list}})
+          this.$router.push({path:'deliverOrderList',query:{list:list}})
         }else if(this.operateType===2){
           //关闭订单
           this.closeOrder.orderIds=[];
@@ -413,11 +420,25 @@
       },
       getList() {
         this.listLoading = true;
-        fetchList(this.listQuery).then(response => {
+        const parms={
+          adminId:this.adminId,
+          listQuery:this.listQuery
+        }
+        fetchShopList(parms).then(response => {
           this.listLoading = false;
           this.list = response.data.list;
           this.total = response.data.total;
+          console.log(response.data)
         });
+      },
+      getAdminInfo()
+      {
+         getInfo().then(response=>{
+           this.adminId=response.data["id"];
+           console.log(response.data);
+           this.getList();
+         });
+
       },
       deleteOrder(ids){
         this.$confirm('是否要进行该删除操作?', '提示', {

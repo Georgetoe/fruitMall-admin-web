@@ -6,6 +6,13 @@ export function fetchList(params) {
     params:params
   })
 }
+export function fetchBrand(params) {
+  return request({
+    url:'/shopbrand/brand',
+    method:'get',
+    params:params
+  })
+}
 export function createBrand(data) {
   return request({
     url:'/brand/create',

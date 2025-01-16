@@ -20,6 +20,7 @@ import Layout from '../views/layout/Layout'
  **/
 export const constantRouterMap = [
   {path: '/login', component: () => import('@/views/login/index'), hidden: true},
+  {path: '/register', component: () => import('@/views/register/index'), hidden: true},
   {path: '/404', component: () => import('@/views/404'), hidden: true},
   {
     path: '',
@@ -31,11 +32,6 @@ export const constantRouterMap = [
       name: 'home',
       component: () => import('@/views/home/index'),
       meta: {title: '营业情况', icon: 'dashboard'}
-    },
-    {
-      name: 'document',
-      path: '',
-      meta: {title: '使用教程', icon: 'document'}
     },
     ]
   }
@@ -377,7 +373,6 @@ export const asyncRouterMap = [
   {
     path:'/shop',
     component: Layout,
-    redirect: '/shop/product',
     name: 'shop',
     meta: {title: '商家店铺', icon: 'shop'},
     children: [
@@ -390,15 +385,15 @@ export const asyncRouterMap = [
 
       {
       path: 'product',
-      name: 'product',
+      name: 'shopProduct',
       component: () => import('@/views/shop/product/index'),
-      meta: {title: '商品列表', icon: 'product-list'}
+      meta: {title: '店铺商品', icon: 'product-list'}
       },
       {
         path: 'addProduct',
-        name: 'addProduct',
+        name: 'addShopProduct',
         component: () => import('@/views/shop/product/add'),
-        meta: {title: '添加商品', icon: 'product-add'}
+        meta: {title: '添加店铺商品', icon: 'product-add'}
       },
 
       {
@@ -430,7 +425,7 @@ export const asyncRouterMap = [
         hidden: true
       },
       {
-        path: '/shop/shopOrder',
+        path: '/shopOrder',
         component: Layout,
         redirect: '/shopOrder/order',
         name: 'shopOrder',
